@@ -1,10 +1,25 @@
 import React from "react";
 
-function Playlist() {
+import Tracklist from "./Tracklist";
+
+function Playlist({ playList, setPlayList }) {
+    const action = "Remove";
+
+    const handleOnClick = (track) => {
+        setPlayList((curr) => {
+            return curr.filter(item => item.uri !== track.uri);
+        })
+;
+    };
+
     return (
-        <>
-            <button>Default Playlist</button>
-        </>
+        <div>
+            <h2>Playlist</h2>
+            <div>
+                <Tracklist trackList={playList} handleOnClick={handleOnClick} action={action} />
+            </div>
+
+        </div>
     )
 };
 

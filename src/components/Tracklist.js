@@ -1,11 +1,20 @@
 import React from "react";
+import Track from "./Track";
 
-function Tracklist() {
+function Tracklist({ trackList, handleOnClick, action }) {
     return (
-        <>
-            <h1>Default Tracklist</h1>
-        </>
+        <ul>
+            {trackList.map(track => (
+                <li key={track.uri}>
+                    <Track track={track} />
+                    <button onClick={() => handleOnClick(track)}>
+                        {action}
+                    </button>
+                </li>
+            ))}
+        </ul>
     )
 };
+
 
 export default Tracklist
