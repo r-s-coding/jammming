@@ -1,12 +1,9 @@
 import React from "react";
-
 import Tracklist from "./Tracklist";
 
 
 function SearchResults({ trackList, setPlayList }) {
-
-  const action = "Add";
-
+  // Handles the addition of tracks to playlist
   const handleOnClick = (track) => {
     setPlayList((curr) => {
       const inPlaylist = curr.some(item => item.uri === track.uri);
@@ -22,7 +19,7 @@ function SearchResults({ trackList, setPlayList }) {
     <div>
       <h2>Results</h2>
       <div>
-        <Tracklist trackList={trackList} handleOnClick={handleOnClick} action={action} />
+        <Tracklist trackList={trackList} handleOnClick={handleOnClick} action="Add" />
       </div>
     </div>
   )

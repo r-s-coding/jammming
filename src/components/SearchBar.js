@@ -1,30 +1,48 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import MockResponse from "../componentTests/MockResponse";
+function SearchBar({ accessToken, setTrackList }) {
+    const [song, setSong] = useState("");
 
+    // Finds related song name using the search api
+    const getData = async () => {
+        try {
+            const response = await fetch(`https://api.spotify.com/v1/search?q=${song}&type=track&limit=15`, {
+                method: "GET", headers: { Authorization: `Bearer ${accessToken}` }
+            });
 
-function SearchBar({ setTrackList }) {
-    const response = MockResponse();
-    const parsedData = response.tracks.items.map((item) => ({
-        name: item.name,
-        artist: item.artists[0].name,
-        album: item.album.name,
-        uri: item.uri
-    }));
+            if (response.ok) {
+                const data = await response.json();
+                const parsedData = data.tracks.items.map((item) => ({
+                    name: item.name,
+                    artist: item.artists[0].name,
+                    album: item.album.name,
+                    uri: item.uri
+                }));
+                setTrackList(parsedData);
+            }
+        } catch (error) {
+            alert('Search Error')
+        };
+    };
 
-    useEffect(() => {
-        setTrackList(parsedData);
-    }, []);    
+    const handleSongChange = ({ target }) => {
+        setSong(target.value);
+    };
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+        getData();
+        setSong("");
+    };
 
     return (
         <div>
-            <form>
+            <form onSubmit={handleOnSubmit}>
                 <div>
-                    <input type="text" name="name" placeholder="Song Name"></input>
+                    <input type="text" name="songName" placeholder="Enter Song Name" value={song} onChange={handleSongChange} required></input>
                 </div>
                 <div>
-                    <input type="submit" value="Search" />
+                    <button type="submit">Search</button>
                 </div>
             </form>
         </div>
