@@ -1,0 +1,9 @@
+.container {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.span {
+    font-size: 0.8rem;
+    opacity: 0.5;
+}

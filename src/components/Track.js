@@ -1,10 +1,11 @@
 import React from "react";
+import styles from "../styles/Track.module.css"
 
 function Track({ track }) {
     return (
-        <div>
+        <div className={styles.container}>
             {track.name} <br/>
-            {track.artist} | {track.album}
+            <span className={styles.span}>{track.artist} | {track.album}</span>
         </div>
     )
 };

@@ -90,18 +90,18 @@ function App() {
         <SearchResults trackList={trackList} setPlayList={setPlayList} />
         <Playlist accessToken={accessToken} userId={userId} playList={playList} setPlayList={setPlayList} />
       </div>
-      <button onClick={handleLogoutOnClick}>Logout</button>
+      <button onClick={handleLogoutOnClick}>LOGOUT</button>
     </div>
   );
   const loginIn = (
-    <div>
+    <div className="login-container">
       <h2>LOGIN TO SPOTIFY TO START CREATING YOUR JAMMMS</h2>
-      <button onClick={handleAuthorizeOnclick}>SignIn</button>
+      <button onClick={handleAuthorizeOnclick}>SIGN IN</button>
     </div>
   )
 
   return (
-    <div className="App">
+    <div className='App'>
       {loggedIn ? mainApp : loginIn}
     </div>
   );

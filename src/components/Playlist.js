@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Tracklist from "./Tracklist";
+import styles from "../styles/ResultPlaylist.module.css";
 
 function Playlist({ accessToken, userId, playList, setPlayList }) {
     const [customName, setCustomName] = useState("");
@@ -59,7 +60,7 @@ function Playlist({ accessToken, userId, playList, setPlayList }) {
 
 
     return (
-        <div>
+        <div className={styles.container}>
             <h2>Playlist</h2>
             <div>
                 <input type="text" name="playlist" placeholder="Name Your Playlist" value={customName} onChange={handleOnChange} required></input>
@@ -67,7 +68,7 @@ function Playlist({ accessToken, userId, playList, setPlayList }) {
             <div>
                 <Tracklist trackList={playList} handleOnClick={handleOnClick} action="Remove" />
             </div>
-            <button onClick={handleSaveOnClick} disabled={!customName || newPlayList.length === 0}>Save to Spotify</button>
+            <button onClick={handleSaveOnClick} disabled={!customName || newPlayList.length === 0}>SAVE TO SPOTIFY</button>
         </div>
     )
 };
