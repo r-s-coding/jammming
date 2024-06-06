@@ -6,7 +6,7 @@ function SearchBar({ accessToken, setTrackList }) {
     // Finds related song name using the search api
     const getData = async () => {
         try {
-            const response = await fetch(`https://api.spotify.com/v1/search?q=${song}&type=track&limit=15`, {
+            const response = await fetch(`https://api.spotify.com/v1/search?q=${song}&type=track&limit=10`, {
                 method: "GET", headers: { Authorization: `Bearer ${accessToken}` }
             });
 

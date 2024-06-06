@@ -11,6 +11,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState('');
   const [userName, setUserName] = useState('');
+  const [userId, setUserId] = useState('');
 
   // Acquires credentials from authorization response
   let stateKey;
@@ -18,22 +19,6 @@ function App() {
     token = params.access_token,
     state = params.state,
     storedState = localStorage.getItem(stateKey);
-
-  // Gets user profile
-  const fetchProfile = async () => {
-    try {
-      const response = await fetch("https://api.spotify.com/v1/me", {
-        method: "GET", headers: { Authorization: `Bearer ${accessToken}` }
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setUserName(data.display_name);
-      }
-    } catch (error) {
-      alert("Unable to fetch your profile!");
-    };
-  };
 
   // Manages the login status and token storage
   useEffect(() => {
@@ -56,9 +41,22 @@ function App() {
 
   // Fetchs user profile display name
   useEffect(() => {
-    if (accessToken) {
-      fetchProfile();
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch("https://api.spotify.com/v1/me", {
+          method: "GET", headers: { Authorization: `Bearer ${accessToken}` }
+        });
+
+        if (response.ok) {
+          const profile = await response.json();
+          setUserName(profile.display_name);
+          setUserId(profile.id)
+        }
+      } catch (error) {
+        alert("Unable to fetch your profile!");
+      };
     };
+    fetchProfile();
   }, [accessToken]);
 
   // Handles logout steps
@@ -85,11 +83,13 @@ function App() {
 
   // Layout for the app's login and main states
   const mainApp = (
-    <div>
+    <div className="container">
       <h1> {`${userName}'s`} JAMMMS </h1>
       <SearchBar accessToken={accessToken} setTrackList={setTrackList} />
-      <SearchResults trackList={trackList} setPlayList={setPlayList} />
-      <Playlist playList={playList} setPlayList={setPlayList} />
+      <div className="results-container">
+        <SearchResults trackList={trackList} setPlayList={setPlayList} />
+        <Playlist accessToken={accessToken} userId={userId} playList={playList} setPlayList={setPlayList} />
+      </div>
       <button onClick={handleLogoutOnClick}>Logout</button>
     </div>
   );

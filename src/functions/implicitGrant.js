@@ -18,7 +18,7 @@ function authorizeGrant(stateKey) {
     const redirect_uri = "http://localhost:3000/callback";
     const state = generateRandomString(16);
     localStorage.setItem(stateKey, state);
-    const scope = 'user-read-private user-read-email';
+    const scope = 'user-read-private user-read-email playlist-modify-private playlist-modify-public';
     let url = 'https://accounts.spotify.com/authorize';
     url += '?response_type=token';
     url += '&client_id=' + encodeURIComponent(client_id);
